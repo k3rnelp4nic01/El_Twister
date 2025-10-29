@@ -23,7 +23,7 @@ public class Principal {
 
     /* ESCRIBIR LA PRIMERA PARTE DE LA NARRATIVA: DESCRIPCIÓN DEL TWISTER Y DE 
     LOS REFUGIOS.*/
-    public int eleccionRefugio(Scanner sc, int energia, int salud) {
+    public int[] eleccionRefugio(Scanner sc, int energia, int salud) { // CREO UN MÉTODO DE TIPO ARRAY YA QUE RETORNARÁ EL ESTADO DEL SUPERVIVIENTE JUNTO A LA ELECCIÓN ACTUAL DEL REFUGIO.
 
         System.out.println(" **************************************************");
         System.out.println(" | LA FURIA DEL TWISTER: SOBREVIVE A LA TORMENTA! | ");
@@ -58,6 +58,7 @@ public class Principal {
                     break;
                 case 3:
                     energia -= 10;
+                    salud -= 5;
                     System.out.println(" | REFUGIO ELEGIDO: " + "CATACUMBAS DEL EXILIO" + ". COSTE: -10 ENERGIA");
                     break;
                 default:
@@ -65,10 +66,11 @@ public class Principal {
 
             }
         }
-        energiaySalud(energia, salud);
-        return energia;
+
+        return new int[]{energia, salud, refugioElegido}; // RETORNA LOS TRES VALORES EN UN SOLO ARRAY.
 
     }
+    //**********************************************************************
 
     //**********************************************************************
     public static void main(String[] args) {
@@ -82,7 +84,29 @@ public class Principal {
         String[] inventario = new String[9]; // CREO CREO UN ARRAY DE TIPO STRING, QUE SE USARÁ COMO MOCHILA/INVENTARIO PARA LOS SUMINISTROS DEL USUARIO.
         //**********************************************************************
 
-        energia = p.eleccionRefugio(sc, energia, salud);
+        int[] resultado = p.eleccionRefugio(sc, energia, salud);
+
+        energia = resultado[0];
+        salud = resultado[1];
+        int refugioElegido = resultado[2];
+
+        p.energiaySalud(energia, salud);
+
+        if (resultado[2] == 1) {
+            System.out.println(" REFUGIO ACTUAL: DESIERTO");
+            System.out.println(" * EL SOL ARDIENTE CAE SOBRE LAS DUNAS DEL DESIERTO. EL VIENTO ARRASTRA LA ARENA,\n "
+                    + "Y EL CALOR TE OBLIGA A RACIONAR TU AGUA. A LO LEJOS, UNA SOMBRA PARECE MOVERSE ENTRE LAS TORMENTAS DE ARENA...");
+        } else if (resultado[2] == 2) {
+            System.out.println(" REFUGIO ACTUALA: RUINA MAYA");
+            System.out.println(" * LAS ANTIGUAS PIEDRAS ESTAN CUBIERTAS DE MUSGO. ENTRE COLUMNAS ROTAS Y SIMBOLOS SAGRADOS,\n "
+                    + "SIENTES UNA ENERGIA ANCESTRAL... PERO TAMBIEN LA MIRADA DE ALGO QUE AUN VIGILA EL LUGAR.");
+
+        } else {
+
+            System.out.println(" REFUGIO ACTUAL: CATACUMBAS DEL EXILIO");
+            System.out.println(" * TE HAS HECHO UNA HERIDA AL DESCENDER POR UN TUNEL OSCURO Y HUMEDO. EL ECO DE TUS PASOS RESUENA,\n"
+                    + " Y UNA CORRIENTE HELADA TE ERIZA LA PIEL. NO ESTAS SOLO AQUI ABAJO...");
+        }
 
     } // FIN DE MAIN
 } // FIN DE PRINCIPAL
