@@ -1,4 +1,4 @@
-// JUEGO: EL TWISTER
+    // JUEGO: EL TWISTER
 package paquete;
 
 import java.util.Scanner;
@@ -6,7 +6,19 @@ import java.util.Random;
 
 public class Principal {
 
-    //**********************************************************************
+    //----------------------------------------------------------------------
+    public boolean existeSuministro(String[] inventario, String productoBuscar) {
+
+        for (int i = 0; i < inventario.length; i++) {
+
+            if (productoBuscar.equalsIgnoreCase(inventario[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //----------------------------------------------------------------------
     public void refugios() { // MÉTODO QUE SOLO IMPRIME LOS REFUGIOS DISPONIBLES Y SU COSTE DE ENERGÍA AL USUARIO. (ANTES DE ELEGIR UNO)
 
         System.out.println(" DEBERAS ELEGIR ENTRE 3 REFUGIOS. LA ELECCION INICIAL CONSUMIRA ENERGIA POR EL TRASLADO. \n ** AVISO ** CADA REFUGIO TIENE UN SUMINISTRO CLAVE QUE DEBES ENCONTRAR!\n");
@@ -14,28 +26,38 @@ public class Principal {
         System.out.println(" 2. RUINA MAYA (RIESGO MEDIO, -15 E)");
         System.out.println(" 3. CATACUMBAS DEL EXILIO (RIESGO ALTO, -10 E, -5 SALUD)\n");
     }
-    //**********************************************************************
 
+    //----------------------------------------------------------------------
     public void energiaySalud(int energia, int salud) {
-
-        System.out.println(" | ENERGIA: " + energia + "% | SALUD: " + salud + "% |\n");
+        System.out.println(" <<< ENERGIA: " + energia + "% | SALUD: " + salud + "% >>>\n");
 
     }
-    //**********************************************************************
+    //----------------------------------------------------------------------
 
-    //**********************************************************************
+    //----------------------------------------------------------------------
     /* ESCRIBIR LA PRIMERA PARTE DE LA NARRATIVA: DESCRIPCIÓN DEL TWISTER Y DE 
-    LOS REFUGIOS.*/
+        LOS REFUGIOS.*/
     public int[] eleccionRefugio(Scanner sc, int energia, int salud) { // CREO UN MÉTODO DE TIPO ARRAY YA QUE RETORNARÁ EL ESTADO DEL SUPERVIVIENTE JUNTO A LA ELECCIÓN ACTUAL DEL REFUGIO.
 
         System.out.println(" **************************************************");
         System.out.println(" | LA FURIA DEL TWISTER: SOBREVIVE A LA TORMENTA! | ");
         System.out.println(" **************************************************\n");
-        System.out.println(" UN TWISTER DE CATEGORIA F5, APODADO 'LA FURIA', SE ACERCA A TU UBICACION. TIENES \n15 MINUTOS PARA PREPARARTE Y ELEGIR EL MEJOR LUGAR PARA SOBREVIVIR. TU ENERGIA \nINICIAL ES DE 100% Y TU SALUD INICIAL ES DE 100%.\n");
-        System.out.println(" TU OBJETIVO ES LLEGAR AL REFUGIO Y SUPERAR LAS RONDAS DE ATAQUE ANTES DE QUE EL \nTWISTER TE ALCANCE. LA GESTION DE TU **INVENTARIO (5/9 ESPACIOS REQUERIDOS)** Y \nTU **ENERGIA** SON VITALES.\n");
-        System.out.println(" --------------------------------------------------");
-        System.out.println(" |'EL TIEMPO SE ACABA. EL DESIERTO ES SEGURO PERO EL TRASLADO TE AGOTARA.\n | LA RUINA MAYA TIENE RECURSOS PERO PUEDE SER PELIGROSO. LAS CATACUMBAS \n | PROTEGEN DEL EXTERIOR, PERO ALGO HABITA EN LA OSCURIDAD.");
-        System.out.println(" --------------------------------------------------\n");
+
+        try {
+            Thread.sleep(900);
+            System.out.println(" UN TWISTER DE CATEGORIA F5, APODADO 'LA FURIA', SE ACERCA A TU UBICACION. TIENES \n15 MINUTOS PARA PREPARARTE Y ELEGIR EL MEJOR LUGAR PARA SOBREVIVIR. TU ENERGIA \nINICIAL ES DE 100% Y TU SALUD INICIAL ES DE 100%.\n");
+            System.out.println(" TU OBJETIVO ES LLEGAR AL REFUGIO Y SUPERAR LAS RONDAS DE ATAQUE ANTES DE QUE EL \nTWISTER TE ALCANCE. LA GESTION DE TU **INVENTARIO (5/9 ESPACIOS REQUERIDOS)** Y \nTU **ENERGIA** SON VITALES.\n");
+
+            Thread.sleep(1200);
+            System.out.println(" --------------------------------------------------");
+            System.out.println(" |'EL TIEMPO SE ACABA. EL DESIERTO ES SEGURO PERO EL TRASLADO TE AGOTARA.\n | LA RUINA MAYA TIENE RECURSOS PERO PUEDE SER PELIGROSO. LAS CATACUMBAS \n | PROTEGEN DEL EXTERIOR, PERO ALGO HABITA EN LA OSCURIDAD.");
+            System.out.println(" --------------------------------------------------\n");
+
+        } catch (InterruptedException e) {
+            System.out.println("ERROR EN LA NARRATIVA...");
+        }
+
+        limpiarPantalla();
 
         refugios(); // LLAMO AL MÉTODO QUE IMPRIME LOS REFUGIOS DISPONIBLES JUNTO A SU REQUERIMIENTO DE ENERGÍA.
         energiaySalud(energia, salud); // VISUALIZACIÓN DE LA ENERGÍA Y SALUD INICIAL DEL SUPERVIVIENTE.
@@ -53,16 +75,16 @@ public class Principal {
             switch (refugioElegido) {
                 case 1:
                     energia -= 25;
-                    System.out.println("\n | REFUGIO ELEGIDO: " + "DESIERTO" + ". COSTE: -25 ENERGIA");
+                    System.out.println("\n | REFUGIO ELEGIDO: " + "DESIERTO" + ". COSTE: -25 ENERGIA\n ");
                     break;
                 case 2:
                     energia -= 15;
-                    System.out.println("\n | REFUGIO ELEGIDO: " + "RUINA MAYA" + ". COSTE: -15 ENERGIA ");
+                    System.out.println("\n | REFUGIO ELEGIDO: " + "RUINA MAYA" + ". COSTE: -15 ENERGIA\n ");
                     break;
                 case 3:
                     energia -= 10;
                     salud -= 5;
-                    System.out.println("\n | REFUGIO ELEGIDO: " + "CATACUMBAS DEL EXILIO" + ". COSTE: -10 ENERGIA | SALUD: -5 ");
+                    System.out.println("\n | REFUGIO ELEGIDO: " + "CATACUMBAS DEL EXILIO" + ". COSTE: -10 ENERGIA | SALUD: -5\n ");
                     break;
                 default:
                     System.out.print(" * OPCION INVALIDA, DEBES INGRESAR 1, 2 O 3: ");
@@ -73,9 +95,10 @@ public class Principal {
         return new int[]{energia, salud, refugioElegido}; // RETORNA LOS TRES VALORES EN UN SOLO ARRAY.
 
     }
-    //**********************************************************************
 
-    public String[] gestionSuministros(Scanner sc, String[] listaSuministros, String[] inventario) {
+    //----------------------------------------------------------------------
+    public String[] gestionSuministros(Scanner sc, String[] listaSuministros, String[] inventario, Principal p, String[] listaDeSuministros, int refugioElegido, int energia, int salud) {
+
         System.out.println(" --------------------------------------------------");
         System.out.println(" | ANTES DE LLEGAR AL REFUGIO TUVISTE TIEMPO PARA RECOLECTAR SUMINISTROS ESENCIALES PARA RESISTIR\n | EL ATAQUE DEL GUARDIAN DEL REFUGIO, JUNTO A LA FURIA DEL TWISTER QUE SE ESTA APROXIMANDO A TI Y\n | ARRASANDO CON TODA EL AREA.");
         System.out.println(" --------------------------------------------------\n");
@@ -91,28 +114,60 @@ public class Principal {
         System.out.println(" | ESCRIBE EL SUMINISTRO DESEADO (EJ: AGUA, COMIDA, LINTERNA,...):  ");
 
         for (int i = 0; i < inventario.length; i++) {
-            System.out.print(" > ");
-            inventario[i] = sc.next().toUpperCase().trim();
-            if (inventario[i].equalsIgnoreCase(listaSuministros[i])) {
-                System.out.println(" HAS AGREGADO: " + inventario[i]);
+
+            // SI YA TIENE 5 SUMINISTROS O MÁS, LE PERMITIMOS "AVANZAR" A LA SIGUIENTE FASE.
+            if (i >= 5) {
+                System.out.println("\n | INVENTARIO LISTO " + (i) + "/9 - TIENES LO SUFICIENTE PARA RESISTIR.");
+                System.out.println(" | ESCRIBE 'AVANZAR' PARA INICIAR LA FASE 3 (ATAQUES) O PUEDES SEGUIR AGREGANDO SUMINISTROS.\n");
             }
+
+            System.out.print(" > ");
+            String suministroTemporal = sc.next().toUpperCase().trim();
+
+            // SI ESCRIBE "AVANZAR", SE LLAMA AL SIGUIENTE MÉTODO Y EL BUCLE SE CORTA.
+            if (suministroTemporal.equalsIgnoreCase("AVANZAR") && i >= 5) {
+                return null;
+            }
+
+            // SI NO EXISTE SUMINISTRO, AGREGO.
+            boolean valido = false; // VARIABLE QUE CONTROLA EL BUCLE
+            while (!valido) { // BUCLE CON VALIDACIÓN DE SUMINISTROS REPETIDOS O NO EXISTENTES.
+
+                while (p.existeSuministro(inventario, suministroTemporal)) {
+                    System.out.print(" *NO PUEDES REPETIR EL SUMINISTRO, INGRESA OTRO: ");
+                    suministroTemporal = sc.next();
+                }
+
+                if (!p.disponibilidadSuministro(listaDeSuministros, suministroTemporal)) {
+                    System.out.print(" *NO EXISTE DICHO SUMINISTRO EN LA LISTA, INGRESA UNO VALIDO: ");
+                    suministroTemporal = sc.next();
+
+                } else {
+                    valido = true;
+                }
+            }
+            // ACÁ AGREGO EL SUMINISTRO
+            inventario[i] = suministroTemporal;
+            System.out.println(" + " + inventario[i]);
             System.out.println(" (MOCHILA " + (i + 1) + "/9 ) ");
         }
+        System.out.println(" ");
         return inventario;
     }
-    //**********************************************************************
 
+    //----------------------------------------------------------------------
     public String[] eliminarSuministros(Scanner sc, String[] inventario) { // OPCIÓN 1 DEL 'MENÚ DE OPCIONES'
 
         boolean eliminado = false;
         while (eliminado == false) { // BUCLE PARA ASEGURARNOS QUE EL USUARIO INGRESE UN SUMINISTRO EXISTENTE.
             System.out.println(" | ESCRIBE EL SUMINISTRO QUE DESEAS QUITAR DE TU INVENTARIO: ");
+            System.out.print(" > ");
             String quitar = sc.next().toUpperCase().trim();
 
             for (int i = 0; i < inventario.length; i++) {
                 if (inventario[i] != null && inventario[i].equalsIgnoreCase(quitar)) {
                     System.out.println(" HAS QUITADO: " + inventario[i]);
-                    inventario[i] = null;
+                    inventario[i] = "";
 
                     eliminado = true;
                 }
@@ -125,8 +180,8 @@ public class Principal {
 
         return inventario;
     }
-    //**********************************************************************
 
+    //----------------------------------------------------------------------
     public void mostrarInventario(String[] inventario) { // OPCIÓN 3 DEL 'MENÚ DE OPCIONES'
 
         System.out.println(" >> INVENTARIO <<");
@@ -136,44 +191,178 @@ public class Principal {
         }
     }
 
-    //**********************************************************************
+    //----------------------------------------------------------------------
     public String[] agregarSuministro(Scanner sc, String[] inventario) {
 
         System.out.println(" | ESCRIBE EL SUMINISTRO QUE DESEAS AGREGAR: ");
-        String agregarSuministro;
+        String agregarSuministro = sc.next().toUpperCase().trim();
 
         for (int i = 0; i < inventario.length; i++) {
-            System.out.print(" > ");
-            agregarSuministro = sc.next().toUpperCase().trim();
-            System.out.println(" (MOCHILA " + (i + 1) + "/9 ) ");
             if (inventario[i] == null) {
                 inventario[i] = agregarSuministro;
-
+                System.out.println(" HAS AGREGADO: " + inventario[i]);
             }
 
         }
         return inventario;
 
     }
+    //----------------------------------------------------------------------
 
-    //**********************************************************************
+    public int[] rondasAtaque(Scanner sc, int refugioElegido, int salud, int energia, String[] inventario) {
+
+        int rondas = 1;
+
+        Random r = new Random();
+
+        String enemigo = "";
+
+        if (refugioElegido == 1) { // ASIGNACIÓN DE ENEMIGOS SEGÚN REFUGIO ELEGIDO POR EL USUARIO.
+            enemigo = "ALACRAN AMARILLO";
+        } else if (refugioElegido == 2) {
+            enemigo = "AJAW NAYAM";
+
+        } else {
+            enemigo = "VIGILIA SEPULCRAL";
+        }
+        //----------------------------------------------------------------------
+
+        System.out.println(" |==============================================|");
+        System.out.println("    ENFRENTAMIENTO CONTRA: " + enemigo + " ");
+        System.out.println(" |==============================================|\n");
+
+        // BUCLE DE TRES RONDAS (FASE 3)
+        while (rondas <= 3 && salud > 0 && energia > 0) {
+
+            System.out.println(" \n |    RONDA " + rondas + "/3    | ");
+            energiaySalud(energia, salud);
+            System.out.println(" --------------------------------------------------\n");
+            System.out.println(" >>> ACCIONES DISPONIBLES <<< \n");
+            System.out.println(" 1. ATACAR (-10 ENERGIA)");
+            System.out.println(" 2. DEFENDER (REDUCE ATAQUE RECIBIDO)");
+            System.out.println(" 3. USAR SUMINISTRO (BOTIQUIN/AGUA/COMIDA)\n");
+            System.out.print(" > DECIDE TU ACCION (1,2/3) : ");
+
+            int accion = sc.nextInt();
+            System.out.println("");
+
+            int damageRecibido = 0;
+            int damageCausado = 0;
+
+            switch (accion) {
+                case 1:
+                    energia -= 10;
+                    damageCausado = 10 + r.nextInt(10);
+                    damageRecibido = 10 + r.nextInt(15);
+                    System.out.println(" ATACAS AL ENEMIGO Y LE CAUSAS " + damageCausado + " DE DAMAGE.");
+                    System.out.println(" EL " + enemigo + " CONTRAATACA Y TE HACE " + damageRecibido + " DE DAMAGE.");
+                    salud -= damageRecibido;
+                    break;
+
+                case 2:
+                    System.out.println(" TE PREPARAS PARA BLOQUEAR EL ATAQUE.");
+                    damageRecibido = 5 + r.nextInt(10);
+                    salud -= damageRecibido;
+                    System.out.println(" BLOQUEAS PARTE DEL GOLPE. PIERDES " + damageRecibido + " DE SALUD.");
+                    energia -= 5;
+                    break;
+
+                case 3:
+                    System.out.println(" | QUE SUMINISTRO QUIERES USAR? (BOTIQUIN/AGUA/COMIDA): ");
+                    String usar = sc.next().toUpperCase().trim();
+                    if (usar.equals("BOTIQUIN") && existeSuministro(inventario, "BOTIQUIN")) {
+                        salud += 10;
+                        if (salud > 100) {
+                            salud = 100;
+                        }
+                        System.out.println(" USAS UN BOTIQUIN. TU SALUD SE RESTAURA A " + salud + "%.");
+                    } else if (usar.equals("AGUA") && existeSuministro(inventario, "AGUA")) {
+                        energia += 15;
+                        if (energia > 100) {
+                            energia = 100;
+                        }
+                        System.out.println(" BEBES AGUA Y RECUPERAS ENERGIA. NUEVA ENERGIA: " + energia + "%.");
+
+                    } else if (usar.equals("COMIDA") && existeSuministro(inventario, "COMIDA")) {
+                        energia += 10;
+                        if (energia > 100) {
+                            energia = 100;
+                        } else {
+                            System.out.println("NO POSEES ESE SUMINISTRO O NO ES UTIL AHORA.");
+                        }
+                    }
+                    break;
+
+                default:
+                    System.out.println(" ACCION INVALIDA. PIERDES TIEMPO Y EL ENEMIGO TE ATACA.");
+                    damageRecibido = 10 + r.nextInt(10);
+                    salud -= damageRecibido;
+                    System.out.println(" RECIBES " + damageRecibido + " DE DAMAGE.");
+            }
+
+            rondas++;
+        }
+
+        if (salud <= 0) {
+            System.out.println(" \n (L _ L) HAS SIDO DERROTADO POR " + enemigo + ".");
+            energiaySalud(energia, salud);
+        } else if (energia <= 0) {
+            System.out.println(" \n TE QUEDASTE SIN ENERGÍA Y NO PUEDES CONTINUAR.");
+            energiaySalud(energia, salud);
+        } else {
+            System.out.println(" \n SOBREVIVISTE AL ATAQUE DE " + enemigo + "!");
+            energiaySalud(energia, salud);
+        }
+        System.out.println(" --------------------------------------------------");
+        return new int[]{salud, energia};
+
+    }
+
+    //----------------------------------------------------------------------
+    public void limpiarPantalla() {
+
+        try {
+            for (int i = 0; i < 15; i++) {
+                System.out.println(" * ");
+                System.out.println(" / ");
+                Thread.sleep(300); // 1000 = 1s ENTRE LÍNEAS.
+            }
+        } catch (InterruptedException e) {
+            System.out.println("ERROR AL LIMPIAR PANTALLA...");
+        }
+        System.out.println("");
+    }
+
+    //----------------------------------------------------------------------
+    public boolean disponibilidadSuministro(String[] listaDeSuministros, String suministroTemporal) {
+
+        for (int i = 0; i < listaDeSuministros.length; i++) {
+            if (suministroTemporal.equalsIgnoreCase(listaDeSuministros[i])) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    //----------------------------------------------------------------------
     public static void main(String[] args) {
 
         Principal p = new Principal();
         Scanner sc = new Scanner(System.in);
-        //**********************************************************************
+        //----------------------------------------------------------------------
         int energia = 100; // ENERGÍA INICIAL DEL USUARIO
         int salud = 100; // SALUD INICIAL DEL USUARIO
         String[] listaDeSuministros = {"AGUA", "COMIDA", "HIERBA", "MUNICION", "CUERDA", "FOSFOROS", "LINTERNA", "BOTIQUIN", "BENGALA", "LLAVE"}; // CREO UN ARRAY DE TIPO STRING QUE ALOJA LOS SUMINISTROS PREDETERMINADOS DEL JUEGO.
         String[] inventario = new String[9]; // CREO CREO UN ARRAY DE TIPO STRING, QUE SE USARÁ COMO MOCHILA/INVENTARIO PARA LOS SUMINISTROS DEL USUARIO.
-        //**********************************************************************
+        //----------------------------------------------------------------------
 
         int[] resultado = p.eleccionRefugio(sc, energia, salud);
 
         energia = resultado[0];
         salud = resultado[1];
         int refugioElegido = resultado[2];
-
+        p.limpiarPantalla();
         p.energiaySalud(energia, salud);
 
         if (resultado[2] == 1) {
@@ -191,35 +380,55 @@ public class Principal {
             System.out.println(" * TE HAS HECHO UNA HERIDA AL DESCENDER POR UN TUNEL OSCURO Y HUMEDO. EL ECO DE TUS PASOS RESUENA,\n"
                     + " Y UNA CORRIENTE HELADA TE ERIZA LA PIEL. NO ESTAS SOLO AQUI ABAJO...\n");
         }
-        //**********************************************************************
+        //----------------------------------------------------------------------
 
-        p.gestionSuministros(sc, listaDeSuministros, inventario); // FASE 2 -> MOSTRAR SUMINISTROS DISPONIBLES EN PANTALLA Y CARGARLOS EN EL ARRAY 'INVENTARIO'.
+        String[] resultadoInv = p.gestionSuministros(sc, listaDeSuministros, inventario, p, listaDeSuministros, refugioElegido, energia, salud); // FASE 2 -> MOSTRAR SUMINISTROS DISPONIBLES EN PANTALLA Y CARGARLOS EN EL ARRAY 'INVENTARIO'.
 
-        int opcion = 0;
-        do {
-            System.out.println("\n > MENU DE OPCIONES < \n");
-            System.out.println(" 1. QUITAR SUMINISTRO");
-            System.out.println(" 2. AGREGAR SUMINISTRO");
-            System.out.println(" 3. ABRIR INVENTARIO");
-            System.out.println(" 0. AVANZAR A LA SIGUIENTE FASE");
-            System.out.print("\n > INGRESA LA OPCION (1,2,3 / 0): ");
-            opcion = sc.nextInt();
-            System.out.println("\n");
+        if (resultadoInv == null) {
+            int[] res = p.rondasAtaque(sc, refugioElegido, salud, energia, inventario);
+            salud = res[0];
+            energia = res[1];
+        }
 
-            switch (opcion) {
+        p.limpiarPantalla();
 
-                case 1:
-                    inventario = p.eliminarSuministros(sc, inventario);
-                    break;
-                case 2:
-                    inventario = p.agregarSuministro(sc, inventario);
-                    break;
-                case 3:
-                    p.mostrarInventario(inventario);
-                    break;
+        if (resultadoInv != null) {
+            int opcion;
+            do {
+                System.out.println("\n > MENU DE OPCIONES < \n");
+                System.out.println(" 1. QUITAR SUMINISTRO");
+                System.out.println(" 2. AGREGAR SUMINISTRO");
+                System.out.println(" 3. ABRIR INVENTARIO");
+                System.out.println(" 0. AVANZAR A LA SIGUIENTE FASE");
+                System.out.print("\n > INGRESA LA OPCION (1,2,3 / 0): ");
+                opcion = sc.nextInt();
+                System.out.println("\n");
 
-            }
-        } while (opcion != 0);
+                switch (opcion) {
 
+                    case 1:
+                        inventario = p.eliminarSuministros(sc, inventario);
+                        break;
+                    case 2:
+                        inventario = p.agregarSuministro(sc, inventario);
+                        break;
+
+                    case 3:
+                        p.mostrarInventario(inventario);
+                        break;
+                    case 0:
+                        System.out.println(" \n AVANZANDO A LA FASE 3... ");
+                        p.limpiarPantalla();
+                        int[] res = p.rondasAtaque(sc, refugioElegido, salud, energia, inventario);
+                        salud = res[0];
+                        energia = res[1];
+                        break;
+                }
+            } while (opcion != 0);
+        }
+
+        p.energiaySalud(energia, salud);
+        //----------------------------------------------------------------------
     } // FIN DE MAIN
 } // FIN DE PRINCIPAL
+ //----------------------------------------------------------------------
