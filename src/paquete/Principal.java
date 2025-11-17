@@ -37,6 +37,7 @@ public class Principal {
     //----------------------------------------------------------------------
     /* ESCRIBIR LA PRIMERA PARTE DE LA NARRATIVA: DESCRIPCIÓN DEL TWISTER Y DE 
         LOS REFUGIOS.*/
+    // FASE 1 - ELECCIÓN DE REFUGIO Y NARRATIVA //
     public int[] eleccionRefugio(Scanner sc, int energia, int salud) { // CREO UN MÉTODO DE TIPO ARRAY YA QUE RETORNARÁ EL ESTADO DEL SUPERVIVIENTE JUNTO A LA ELECCIÓN ACTUAL DEL REFUGIO.
 
         System.out.println(" **************************************************");
@@ -96,7 +97,8 @@ public class Principal {
     }
 
     //----------------------------------------------------------------------
-    public String[] gestionSuministros(Scanner sc, String[] listaSuministros, String[] inventario, Principal p, String[] listaDeSuministros, int refugioElegido, int energia, int salud) {
+    // FASE 2 - GESTIÓN DE SUMINISTROS //
+    public String[] gestionSuministros(Scanner sc, String[] listaSuministros, String[] inventario, Principal p, int refugioElegido, int energia, int salud) {
 
         System.out.println(" --------------------------------------------------");
         System.out.println(" | ANTES DE LLEGAR AL REFUGIO TUVISTE TIEMPO PARA RECOLECTAR SUMINISTROS ESENCIALES PARA RESISTIR\n | EL ATAQUE DEL GUARDIAN DEL REFUGIO, JUNTO A LA FURIA DEL TWISTER QUE SE ESTA APROXIMANDO A TI Y\n | ARRASANDO CON TODA EL AREA.");
@@ -137,7 +139,7 @@ public class Principal {
                     suministroTemporal = sc.next();
                 }
 
-                if (!p.disponibilidadSuministro(listaDeSuministros, suministroTemporal)) {
+                if (!p.disponibilidadSuministro(listaSuministros, suministroTemporal)) {
                     System.out.print(" *NO EXISTE DICHO SUMINISTRO EN LA LISTA, INGRESA UNO VALIDO: ");
                     suministroTemporal = sc.next();
 
@@ -208,6 +210,7 @@ public class Principal {
     }
 
     //----------------------------------------------------------------------
+    // FASE 3 - RONDAS DE ATAQUE //
     public int[] rondasAtaque(Scanner sc, int refugioElegido, int salud, int energia, String[] inventario) {
 
         int rondas = 1;
@@ -286,10 +289,12 @@ public class Principal {
                         energia += 10;
                         if (energia > 100) {
                             energia = 100;
-                        } else {
-                            System.out.println("NO POSEES ESE SUMINISTRO O NO ES UTIL AHORA.");
                         }
+
+                    } else {
+                        System.out.println("NO POSEES ESE SUMINISTRO O NO ES UTIL AHORA.");
                     }
+
                     break;
 
                 default:
@@ -343,8 +348,9 @@ public class Principal {
         }
         return false;
     }
-    
+
     //----------------------------------------------------------------------
+    //  FASE 4 - BATALLA FINAL CONTRA EL TWISTER //
     public int[] etapaFinal(int energia, int salud, int refugioElegido, String[] inventario) {
 
         Random r = new Random();
@@ -432,7 +438,7 @@ public class Principal {
             }
             //----------------------------------------------------------------------
 
-            String[] resultadoInv = p.gestionSuministros(sc, listaDeSuministros, inventario, p, listaDeSuministros, refugioElegido, energia, salud); // FASE 2 -> MOSTRAR SUMINISTROS DISPONIBLES EN PANTALLA Y CARGARLOS EN EL ARRAY 'INVENTARIO'.
+            String[] resultadoInv = p.gestionSuministros(sc, listaDeSuministros, inventario, p, refugioElegido, energia, salud); // FASE 2 -> MOSTRAR SUMINISTROS DISPONIBLES EN PANTALLA Y CARGARLOS EN EL ARRAY 'INVENTARIO'.
 
             if (resultadoInv == null) {
                 int[] res = p.rondasAtaque(sc, refugioElegido, salud, energia, inventario);
