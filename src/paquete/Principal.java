@@ -1,4 +1,4 @@
-    // GAME - *** LA FURIA DEL TWISTER *** - //
+// GAME - *** LA FURIA DEL TWISTER *** - //
 package paquete;
 
 import java.util.Scanner;
@@ -343,7 +343,7 @@ public class Principal {
         }
         return false;
     }
-
+    
     //----------------------------------------------------------------------
     public int[] etapaFinal(int energia, int salud, int refugioElegido, String[] inventario) {
 
